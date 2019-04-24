@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const taskSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+        // required: true,
         minlength: 1,
         maxlength: 50
     },
@@ -27,8 +27,8 @@ const taskSchema = new mongoose.Schema({
         }
     },
     owner:{
-        type: String,
-        required: true
+        type: String
+        //required: true
     }
 });
 
@@ -38,7 +38,9 @@ function validateTask(task) {
     const schema = {
         title: Joi.string().min(1).required(),
         description: Joi.string().max(1024),
-        owner: Joi.string().required()
+        tags: Joi.array(),
+        status: Joi.string(),
+        owner: Joi.string()
     };
 
     return Joi.validate(task, schema);

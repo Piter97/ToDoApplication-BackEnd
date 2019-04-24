@@ -1,4 +1,5 @@
 const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
 const admin = require('../middleware/group-admin');
 const {Task, validate} = require('../models/task');
 const mongoose = require('mongoose');
@@ -6,7 +7,7 @@ const express = require('express');
 const router = express.Router();
 const {Group} = require('../models/group');
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', [auth, validateObjectId], async (req, res) => {
   const grouptasks = await Task.find({ owner: req.params.id});
   res.send(grouptasks);
 });
@@ -32,7 +33,7 @@ router.post('/', auth, async (req, res) => {
   res.send(task);
 });
 
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', [auth, validateObjectId], async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
   const taskToCheck = await Task
@@ -55,7 +56,7 @@ router.put('/:id', auth, async (req, res) => {
   res.send(task);
 });
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [auth, validateObjectId], async (req, res) => {
   const check = await Group
     .findById(req.params.id);
 
@@ -68,7 +69,7 @@ router.delete('/:id', auth, async (req, res) => {
   res.send(task);
 });
 
-router.get('/task/:id', auth, async (req, res) => {
+router.get('/task/:id', [auth, validateObjectId], async (req, res) => {
   const task = await Task.findById(req.params.id);
 
   if (!task) return res.status(404).send('The task with the given ID was not found.');

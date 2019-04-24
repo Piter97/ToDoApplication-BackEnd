@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-router.get('/mygroups', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
     const group = await Group
         .find({ members: req.user._id})
         .select({name: 1});
@@ -24,7 +24,6 @@ router.post('/', auth, async (req, res) => {
         name: req.body.name,
         members: req.body.members,
         groupAdmin: req.user._id,
-        tasks: req.body.tasks
     })
 
     group = await group.save();

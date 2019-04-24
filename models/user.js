@@ -23,12 +23,12 @@ const userSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 1024
     },
-    groups:{
-        type: Array
-    },
-    tasks:{
-        type: Array
-    }
+    // groups:{
+    //     type: Array
+    // },
+    // tasks:{
+    //     type: Array
+    // }
 });
 
 userSchema.methods.generateAuthToken = function () {

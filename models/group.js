@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const groupSchema = new mongoose.Schema({
     name:{
         type: String,
+        maxlength: 50,
         required: true
     },
     members:{
@@ -11,9 +12,6 @@ const groupSchema = new mongoose.Schema({
     },
     groupAdmin:{
         type: String,
-    },
-    tasks:{
-        type: Array
     }
 });
 
@@ -24,7 +22,6 @@ function validateGroup(group) {
         name: Joi.string().required(),
         members: Joi.array(),
         groupAdmin: Joi.string(),
-        tasks: Joi.array()
     };
 
     return Joi.validate(group, schema);

@@ -9,6 +9,7 @@ const {Group} = require('../models/group');
 
 router.get('/:id', [auth, validateObjectId], async (req, res) => {
   const grouptasks = await Task.find({ owner: req.params.id});
+  if (!grouptasks) return res.status(400).send("Group have no tasks")
   res.send(grouptasks);
 });
 

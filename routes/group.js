@@ -12,7 +12,7 @@ router.get('/', auth, async (req, res) => {
     const group = await Group
         .find({ members: req.user._id})
         .select({name: 1});
-    
+        if (!group) return res.status(400).send('User belongs to any group');
         res.send(group);
 });
 

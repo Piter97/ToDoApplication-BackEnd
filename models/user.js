@@ -23,18 +23,17 @@ const userSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 1024
     },
-    groups:{
-        type: Array
-    },
-    tasks:{
-        type: Array
-    }
+    // groups:{
+    //     type: Array
+    // },
+    // tasks:{
+    //     type: Array
+    // }
 });
 
 userSchema.methods.generateAuthToken = function () {
     const token = jwt.sign({
-        _id: this._id,
-        isGroupAdmin: this.isGroupAdmin
+        _id: this._id
     }, config.get('jwtPrivateKey'));
     return token;
 }

@@ -5,7 +5,8 @@ const mytasks = require('./routes/mytasks');
 const users = require('./routes/users');
 const group = require('./routes/group');
 const grouptasks = require('./routes/grouptasks');
-
+const cors = require ('cors');
+var bodyParser = require('body-parser');
 const auth = require('./routes/auth');
 const express = require('express');
 const app = express();
@@ -24,6 +25,10 @@ mongoose.connect(config.get('db'), {
     .catch(err => console.error('Could not connect to MongoDB...',err));
 
 app.use(express.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use('/api/mytasks', mytasks);
 app.use('/api/auth', auth);
 app.use('/api/users', users);

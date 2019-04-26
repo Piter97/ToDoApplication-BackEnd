@@ -9,6 +9,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', auth, async (req, res) => {
+    console.log(req.body)
     const group = await Group
         .find({ members: req.user._id})
         .select({name: 1});
@@ -17,6 +18,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
+    console.log(req.body)
     const { error } = validate(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
 

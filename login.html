@@ -6,12 +6,12 @@
     <body>
         <h1>Hello World</h1>
         <input id="login" type="text" placeholder="email" />
-        <input id="password" type="text" placeholder="password" />
+        <input id="password" type="password" placeholder="password" />
         <button id="button" onclick="save()">Login</button>
     </body>
     <script>
         storage = localStorage;
-        //var aLength = storage.length;
+        var groupTaskName = "";
 
         /* when user log to their account */
         const save = () => {
@@ -44,7 +44,7 @@
                 .catch(err => console.log(err));
 
             /* USERS */
-            fetch('https://to-do-a.herokuapp.com/api/users/me', {
+            await fetch('https://to-do-a.herokuapp.com/api/users/me', {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -56,7 +56,7 @@
                 .catch(err => console.log(err));
 
             /* MY TASKS */
-            fetch('https://to-do-a.herokuapp.com/api/mytasks', {
+            await fetch('https://to-do-a.herokuapp.com/api/mytasks', {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -68,7 +68,7 @@
                 .catch(err => console.log(err));
 
             /* GROUP */
-            fetch('https://to-do-a.herokuapp.com/api/group', {
+            await fetch('https://to-do-a.herokuapp.com/api/group', {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -80,7 +80,7 @@
                 .catch(err => console.log(err));
 
             /* GROUPTASKS */
-            fetch('https://to-do-a.herokuapp.com/api/grouptasks/5cc03dcb50d4cd07a0618670', {
+            await fetch('https://to-do-a.herokuapp.com/api/grouptasks/5cc03dcb50d4cd07a0618670', {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -88,9 +88,11 @@
                     }
                 })
                 .then(res => res.text())
-                .then(res => console.log(JSON.parse(res)[0].title))
+                .then(res => groupTaskName = JSON.parse(res)[0].title)
                 .catch(err => console.log(err));
+            console.log(groupTaskName);
         }
+
     </script>
 
 </html>

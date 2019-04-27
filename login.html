@@ -4,15 +4,12 @@
     </head>
 
     <body>
-        <h1>Hello World</h1>
+        <h1>Login</h1>
         <input id="login" type="text" placeholder="email" />
         <input id="password" type="password" placeholder="password" />
         <button id="button" onclick="save()">Login</button>
     </body>
     <script>
-        storage = localStorage;
-        var groupTaskName = "";
-
         /* when user log to their account */
         const save = () => {
             var login = document.getElementById("login").value;
@@ -20,14 +17,11 @@
             whenUserLogIn(login, password);
         }
 
-        var button = document.getElementById("button").addEventListener("onclick", save);
-
-        var whenUserLogIn = async (login, password) => {
+        const whenUserLogIn = async (login, password) => {
             var userToLogIn = {
                 "email": login,
                 "password": password
             }
-            console.log(userToLogIn);
 
             /* AUTH */
             await fetch('https://to-do-a.herokuapp.com/api/auth', {
@@ -38,61 +32,12 @@
                     }
                 })
                 .then(res => res.text())
-                .then(res => {
-                    storage.setItem(`user`, res);
-                })
+                .then(res => user = res)
                 .catch(err => console.log(err));
 
-            /* USERS */
-            await fetch('https://to-do-a.herokuapp.com/api/users/me', {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-auth-token": localStorage.getItem(`user`)
-                    }
-                })
-                .then(res => res.text())
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
-
-            /* MY TASKS */
-            await fetch('https://to-do-a.herokuapp.com/api/mytasks', {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-auth-token": localStorage.getItem(`user`)
-                    }
-                })
-                .then(res => res.text())
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
-
-            /* GROUP */
-            await fetch('https://to-do-a.herokuapp.com/api/group', {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-auth-token": localStorage.getItem(`user`)
-                    }
-                })
-                .then(res => res.text())
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
-
-            /* GROUPTASKS */
-            await fetch('https://to-do-a.herokuapp.com/api/grouptasks/5cc03dcb50d4cd07a0618670', {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-auth-token": localStorage.getItem(`user`)
-                    }
-                })
-                .then(res => res.text())
-                .then(res => groupTaskName = JSON.parse(res)[0].title)
-                .catch(err => console.log(err));
-            console.log(groupTaskName);
+                var queryString = `?${user}`;
+                window.location.href = "./toDoList.html" + queryString;
         }
-
     </script>
 
 </html>

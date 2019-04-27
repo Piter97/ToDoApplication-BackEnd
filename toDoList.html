@@ -1,0 +1,84 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+            <div class="card card-body text-center">
+                <h1><i class="fab fa-node-js fa-3x"></i></h1>
+                <h1>DRAG AND DROP</h1>    
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var userJWT = decodeURIComponent(window.location.search).substring(1);
+    var userTasks;
+    
+
+    const getGroupObject = async () => {
+    /* USERS */
+    await fetch('https://to-do-a.herokuapp.com/api/users/me', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": userJWT
+            }
+        })
+        .then(res => res.text())
+        .then(res => console.log(JSON.parse(res)))
+        .catch(err => console.log(err));
+
+        /* MY TASKS */
+        await fetch('https://to-do-a.herokuapp.com/api/mytasks', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth-token": userJWT
+            }
+        })
+        .then(res => res.text())
+        .then(res => userTasks = JSON.parse(res))
+        .catch(err => console.log(err));
+
+        /* GROUP */
+        await fetch('https://to-do-a.herokuapp.com/api/group', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth-token": userJWT
+            }
+        })
+        .then(res => res.text())
+        .then(res => res)
+        .catch(err => console.log(err));
+
+        /* GROUPTASKS */
+        await fetch('https://to-do-a.herokuapp.com/api/grouptasks/5cc03dcb50d4cd07a0618670', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "x-auth-token": userJWT
+            }
+        })
+        .then(res => res.text())
+        .then(res => res)
+        .catch(err => console.log(err));
+
+        /* TUTAJ WSZYSTKIE IFORMACJE O TASKACH DLA ZAALOGOWANEGO UZYTKOWNIKA */
+        /* MUSISZ TO WSZYSTKO WRZUCIC TYLKO DO ODPOWIEDNIEGO ELEMENTU W TYM DRAG AND DROP*/
+        console.log(userTasks[0]);
+        console.log(userTasks[1]);
+        console.log(userTasks[2]);
+        //groupTask.status
+        //groupTask.title
+        //groupTask.description
+        //groupTask.tags
+    }
+    getGroupObject();
+</script>
+
+</html>

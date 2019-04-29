@@ -52,10 +52,10 @@
 <script>
     /* when user log to their account */
     let user;
-    document.querySelector(".btn").addEventListener("click", function(event){
+    document.querySelector(".btn").addEventListener("click", function (event) {
         event.preventDefault()
     });
-    const save = () => {
+    const save = async () => {
         var name = document.getElementById("name").value;
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
@@ -67,24 +67,24 @@
             "email": email,
             "password": password
         }
-       
+
         /* AUTH */
         await fetch('https://to-do-a.herokuapp.com/api/users', {
-                method: "POST",
-                body: JSON.stringify(userToLogIn),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            // .then(res => res.text())
+            method: "POST",
+            body: JSON.stringify(userToLogIn),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then(res => res.text())
             .then(res => {
-                console.log(typeof res)
-                if (typeof res ==object) {
-                    window.location.href = "./login.html"
-                } 
+                console.log(res)
+                if (res[0] !== "{") {
+                    return alert(res);
+                }
                 else {
-                    console.log(res);
-                    return alert(res.text());
+                    return window.location.href = "./login.html"
+                    
                 }
             })
             .catch(err => console.log(err));

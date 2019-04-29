@@ -19,22 +19,24 @@
                     <h1 class="text-center mb-3">
                         <i class="fas fa-user-plus"></i> Rejestracja
                     </h1>
-                    
-                    <form action="/users/register" method="POST">
+
+                    <form>
                         <div class="form-group">
                             <label for="name">Nazwa</label>
-                            <input type="name" id="name" name="name" class="form-control" placeholder="Wprowadź nazwę" required/>
+                            <input type="name" id="name" name="name" class="form-control" placeholder="Wprowadź nazwę"
+                                required />
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Wprowadź email" required/>
+                            <input type="email" id="email" name="email" class="form-control"
+                                placeholder="Wprowadź email" required />
                         </div>
                         <div class="form-group">
                             <label for="password">Hasło</label>
                             <input type="password" id="password" name="password" class="form-control"
-                                placeholder="Stwórz Hasło" required/>
+                                placeholder="Stwórz Hasło" required />
                         </div>
-                        <button type="submit"  class="btn btn-primary btn-block" onclick="save()">
+                        <button type="submit" class="btn btn-primary btn-block" onclick="save()">
                             Zarejestruj
                         </button>
                         <p class="lead mt-4">
@@ -45,11 +47,14 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 <script>
     /* when user log to their account */
     let user;
+    document.querySelector(".btn").addEventListener("click", function(event){
+        event.preventDefault()
+    });
     const save = () => {
         var name = document.getElementById("name").value;
         var email = document.getElementById("email").value;
@@ -58,10 +63,11 @@
     }
     const whenUserLogIn = async (name, email, password) => {
         var userToLogIn = {
-            "name":name,
+            "name": name,
             "email": email,
             "password": password
         }
+        console.log(123);
         /* AUTH */
         await fetch('https://to-do-a.herokuapp.com/api/users', {
                 method: "POST",
@@ -71,21 +77,17 @@
                 }
             })
             .then(res => res.text())
-            .then(res =>{console.log(res)
-                if(true){
-                    console.log('trtrtrt')
-                    return alert("Invalid email or password")
+            .then(res => {
+                console.log(res)
+                if (res instanceof Object) {
+                    window.location.href = "./login.html"
                 } 
-                else{
-                    
-                    // var queryString = `?${res}`;
-                    // window.location.href = "./toDoList.html" + queryString;
+                else {
+                    return alert(res);
                 }
             })
             .catch(err => console.log(err));
-        }
-        
-    
+    }
 </script>
 
 

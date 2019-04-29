@@ -41,18 +41,17 @@
 </body>
 <script>
     /* when user log to their account */
+    let user;
     const save = () => {
         var login = document.getElementById("login").value;
         var password = document.getElementById("password").value;
         whenUserLogIn(login, password);
     }
-
     const whenUserLogIn = async (login, password) => {
         var userToLogIn = {
             "email": login,
             "password": password
         }
-
         /* AUTH */
         await fetch('https://to-do-a.herokuapp.com/api/auth', {
                 method: "POST",
@@ -62,18 +61,18 @@
                 }
             })
             .then(res => res.text())
-            .then(res =>{if(!user=='Invalid email or password'){
-            return alert("Wprowadź dane")} 
-            else{user=res}})
+            .then(res =>{console.log(res)
+                if(res=='Invalid email or password'){
+                    return alert("Invalid email or password")
+                } 
+                else{
+                    var queryString = `?${res}`;
+                    window.location.href = "./toDoList.html" + queryString;
+                }
+            })
             .catch(err => console.log(err));
-      
-
-        
-        
         }
-        var queryString = `?${user}`;
-        window.location.href = "./toDoList.html" + queryString;
-
+        
     
 </script>
 

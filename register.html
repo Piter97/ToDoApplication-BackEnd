@@ -67,7 +67,7 @@
             "email": email,
             "password": password
         }
-        console.log(123);
+       
         /* AUTH */
         await fetch('https://to-do-a.herokuapp.com/api/users', {
                 method: "POST",
@@ -76,14 +76,15 @@
                     "Content-Type": "application/json"
                 }
             })
-            .then(res => res.text())
+            // .then(res => res.text())
             .then(res => {
-                console.log(res)
-                if (res instanceof Object) {
+                console.log(typeof res)
+                if (typeof res ==object) {
                     window.location.href = "./login.html"
                 } 
                 else {
-                    return alert(res);
+                    console.log(res);
+                    return alert(res.text());
                 }
             })
             .catch(err => console.log(err));

@@ -33,10 +33,10 @@ router.post('/', auth, async (req, res) => {
 router.put('/:id',[auth,validateObjectId], async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
-  const check = await Group
-    .findById(req.params.id);
+  // const check = await Group
+  //   .findById(req.params.id);
 
-  if (req.user._id !== check.owner) return res.status(403).send('Access denied.');
+  // if (req.user._id !== check.owner) return res.status(403).send('Access denied.');
 
   const task = await Task.findByIdAndUpdate(req.params.id, {
     
@@ -52,10 +52,10 @@ router.put('/:id',[auth,validateObjectId], async (req, res) => {
 });
 
 router.delete('/:id', [auth, validateObjectId], async (req, res) => {
-  const check = await Group
-    .findById(req.params.id);
+  // const check = await Us
+  //   .findById(req.params.id);
 
-  if (req.user._id !== check.owner) return res.status(403).send('Access denied.');
+  // if (req.user._id !== check.owner) return res.status(403).send('Access denied.');
   const task = await Task.findByIdAndRemove(req.params.id);
 
   if (!task) return res.status(404).send('The task with the given ID was not found.');
